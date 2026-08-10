@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 // POST /api/cancel
 // body: { userId: string }
 // 「検索をやめる」ボタン、または60秒タイムアウト時にフロントから呼ぶ。

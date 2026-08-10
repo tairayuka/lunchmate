@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 // GET /api/status?userId=xxxx
 // 検索中画面（/searching）が1.5秒おきなどでポーリングする想定。
 import { NextResponse } from 'next/server';

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 // POST /api/register
 // body: { name: string, nationalityCode: string }
 // 「今日のランチに参加する」ボタン押下時に呼ぶ。
