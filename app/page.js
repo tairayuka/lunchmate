@@ -47,7 +47,7 @@ export default function Home() {
         body: JSON.stringify({ name, nationalityCode }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || '登録に失敗しました');
+      if (!res.ok) throw new Error(data.detail ? `${data.error}: ${data.detail}` : (data.error || '登録に失敗しました'));
 
       setUserId(data.userId);
 
