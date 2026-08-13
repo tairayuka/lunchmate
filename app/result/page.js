@@ -1,17 +1,19 @@
 'use client';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { colors, pageShell, headingFont, card } from '../../lib/theme';
+import { colors, pageShell, headingFont, card, border } from '../../lib/theme';
 import { RESULT } from '../../lib/content';
 import Header from '../../components/Header';
 import PrimaryButton from '../../components/PrimaryButton';
-import { CheckCircleIcon, XIcon } from '../../components/icons';
+import { CheckCircleIcon, XIcon, InfoIcon } from '../../components/icons';
 import { toQueryString } from '../../lib/queryParams';
 
 function ResultContent() {
   const router = useRouter();
   const params = useSearchParams();
   const [canceling, setCanceling] = useState(false);
+  const [partnerCanceled, setPartnerCanceled] = useState(false);
+  const pollRef = useRef(null);
 
   const userId = params.get('userId') || '';
   const matchNumber = params.get('matchNumber') || '';
@@ -19,9 +21,32 @@ function ResultContent() {
   const partnerNationality = params.get('partnerNationality') || '';
   const location = params.get('location') || '';
 
+  // 相手が先にこのマッチをキャンセルしていないか、定期的に確認する。
+  // 自分からキャンセルした場合は/canceledへ遷移するので、この画面に残っている
+  // ということは「まだ自分からはキャンセルしていない」状態のはず。
+  useEffect(() => {
+    if (!userId) return;
+
+    pollRef.current = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/status?userId=${userId}`);
+        const data = await res.json();
+        if (data.status === 'canceled') {
+          setPartnerCanceled(true);
+          clearInterval(pollRef.current);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }, 3000);
+
+    return () => clearInterval(pollRef.current);
+  }, [userId]);
+
   async function handleCancelMatch() {
-    if (canceling) return;
+    if (canceling || partnerCanceled) return;
     setCanceling(true);
+    clearInterval(pollRef.current);
     try {
       await fetch('/api/cancel', {
         method: 'POST',
@@ -42,6 +67,28 @@ function ResultContent() {
           {RESULT.heading}
         </h1>
         <div style={{ width: 64, height: 4, background: colors.orange, borderRadius: 2, margin: '0 auto 24px' }} />
+
+        {partnerCanceled && (
+          <div
+            style={{
+              display: 'flex',
+              gap: 10,
+              alignItems: 'flex-start',
+              textAlign: 'left',
+              background: colors.disabledBg,
+              border: border(2),
+              borderRadius: 14,
+              padding: '12px 14px',
+              margin: '0 auto 20px',
+              maxWidth: 320,
+            }}
+          >
+            <InfoIcon size={18} color={colors.navy} />
+            <p style={{ margin: 0, fontSize: 12.5, color: colors.navy, lineHeight: 1.5, fontWeight: 700 }}>
+              {RESULT.partnerCanceledNotice}
+            </p>
+          </div>
+        )}
 
         <div style={{ ...card, maxWidth: 320, margin: '0 auto 20px' }}>
           <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: colors.textMuted, letterSpacing: 0.5 }}>
@@ -67,11 +114,14 @@ function ResultContent() {
           {RESULT.cta}
         </PrimaryButton>
 
-        <div style={{ height: 12 }} />
-
-        <PrimaryButton variant="danger" disabled={canceling} icon={<XIcon size={16} />} onClick={handleCancelMatch}>
-          {RESULT.cancelCta}
-        </PrimaryButton>
+        {!partnerCanceled && (
+          <>
+            <div style={{ height: 12 }} />
+            <PrimaryButton variant="danger" disabled={canceling} icon={<XIcon size={16} />} onClick={handleCancelMatch}>
+              {RESULT.cancelCta}
+            </PrimaryButton>
+          </>
+        )}
       </div>
     </main>
   );
