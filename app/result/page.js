@@ -5,7 +5,7 @@ import { colors, pageShell, headingFont, card, border } from '../../lib/theme';
 import { RESULT } from '../../lib/content';
 import Header from '../../components/Header';
 import PrimaryButton from '../../components/PrimaryButton';
-import { CheckCircleIcon, XIcon, InfoIcon } from '../../components/icons';
+import { CheckCircleIcon, XIcon } from '../../components/icons';
 import { toQueryString } from '../../lib/queryParams';
 
 function ResultContent() {
@@ -72,21 +72,40 @@ function ResultContent() {
           <div
             style={{
               display: 'flex',
-              gap: 10,
+              gap: 12,
               alignItems: 'flex-start',
               textAlign: 'left',
-              background: colors.disabledBg,
-              border: border(2),
-              borderRadius: 14,
-              padding: '12px 14px',
-              margin: '0 auto 20px',
+              background: colors.red,
+              border: border(3),
+              borderRadius: 16,
+              boxShadow: `4px 4px 0px ${colors.navy}`,
+              padding: '16px 16px',
+              margin: '0 auto 24px',
               maxWidth: 320,
             }}
           >
-            <InfoIcon size={18} color={colors.navy} />
-            <p style={{ margin: 0, fontSize: 12.5, color: colors.navy, lineHeight: 1.5, fontWeight: 700 }}>
-              {RESULT.partnerCanceledNotice}
-            </p>
+            <span
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: '50%',
+                background: colors.white,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}
+            >
+              <XIcon size={16} color={colors.red} />
+            </span>
+            <div>
+              <p style={{ ...headingFont, margin: 0, fontSize: 15, fontWeight: 800, color: colors.white }}>
+                {RESULT.partnerCanceledHeading}
+              </p>
+              <p style={{ margin: '4px 0 0', fontSize: 13, color: colors.white, lineHeight: 1.5, fontWeight: 600 }}>
+                {RESULT.partnerCanceledNotice}
+              </p>
+            </div>
           </div>
         )}
 
