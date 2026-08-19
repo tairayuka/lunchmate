@@ -113,6 +113,7 @@ function SearchingContent() {
         </PrimaryButton>
 
         <p style={{ textAlign: 'center', color: colors.textMuted, fontSize: 12, marginTop: 14 }}>{SEARCHING.footer}</p>
+        <p style={{ textAlign: 'center', color: colors.textMuted, fontSize: 12, marginTop: 4 }}>{SEARCHING.timeoutHint}</p>
       </div>
     </main>
   );

@@ -33,7 +33,7 @@ export async function POST(req) {
 
     if (natError || !nat) {
       console.error('nationalities取得エラー:', natError);
-      return NextResponse.json({ error: '不正な国籍コード、またはSupabase接続に失敗しました', detail: natError?.message }, { status: 400 });
+      return NextResponse.json({ error: '不正な国籍コード、またはSupabase接続に失敗しました' }, { status: 400 });
     }
 
     // register_and_match() をRPC実行（登録 + 即時マッチ判定をDB側でアトミックに処理）
@@ -43,7 +43,7 @@ export async function POST(req) {
 
     if (error) {
       console.error('register_and_match RPCエラー:', error);
-      return NextResponse.json({ error: '登録に失敗しました', detail: error.message }, { status: 500 });
+      return NextResponse.json({ error: '登録に失敗しました' }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -59,6 +59,6 @@ export async function POST(req) {
     });
   } catch (e) {
     console.error('予期しないエラー:', e);
-    return NextResponse.json({ error: 'サーバー内部エラー', detail: String(e?.message || e) }, { status: 500 });
+    return NextResponse.json({ error: 'サーバー内部エラー' }, { status: 500 });
   }
 }

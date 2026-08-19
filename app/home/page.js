@@ -5,6 +5,7 @@ import { colors, pageShell, headingFont } from '../../lib/theme';
 import { HOME } from '../../lib/content';
 import Header from '../../components/Header';
 import FindMateButton from '../../components/FindMateButton';
+import StepIndicator from '../../components/StepIndicator';
 import { toQueryString } from '../../lib/queryParams';
 
 function HomeContent() {
@@ -54,6 +55,7 @@ function HomeContent() {
     <main style={pageShell}>
       <Header />
       <div style={{ width: '100%', maxWidth: 360, textAlign: 'center' }}>
+        <StepIndicator current={3} total={3} />
         <h1 style={{ ...headingFont, fontSize: 26, fontWeight: 800, color: colors.navy, margin: '8px 0 4px' }}>
           {HOME.heading}
         </h1>
@@ -63,6 +65,8 @@ function HomeContent() {
       <div style={{ flex: 1, minHeight: 40 }} />
 
       <FindMateButton label={HOME.cta} variant="ringed" disabled={submitting} onClick={handleFindMate} />
+
+      <p style={{ color: colors.textMuted, fontSize: 12.5, marginTop: 14, textAlign: 'center' }}>{HOME.hint}</p>
 
       {errorMsg && <p style={{ color: colors.red, fontSize: 13, marginTop: 16, textAlign: 'center' }}>{errorMsg}</p>}
 

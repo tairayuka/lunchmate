@@ -24,7 +24,7 @@ export async function GET(req) {
 
     if (error) {
       console.error('get_user_status RPCエラー:', error);
-      return NextResponse.json({ error: '状態取得に失敗しました', detail: error.message }, { status: 500 });
+      return NextResponse.json({ error: '状態取得に失敗しました' }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -39,6 +39,6 @@ export async function GET(req) {
     });
   } catch (e) {
     console.error('予期しないエラー:', e);
-    return NextResponse.json({ error: 'サーバー内部エラー', detail: String(e?.message || e) }, { status: 500 });
+    return NextResponse.json({ error: 'サーバー内部エラー' }, { status: 500 });
   }
 }

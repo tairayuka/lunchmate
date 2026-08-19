@@ -7,6 +7,7 @@ import { CheckIcon } from '../../components/icons';
 import Header from '../../components/Header';
 import GuidelineCard from '../../components/GuidelineCard';
 import PrimaryButton from '../../components/PrimaryButton';
+import StepIndicator from '../../components/StepIndicator';
 import { toQueryString } from '../../lib/queryParams';
 
 function GuidelineContent() {
@@ -26,6 +27,7 @@ function GuidelineContent() {
     <main style={pageShell}>
       <Header />
       <div style={{ width: '100%', maxWidth: 360 }}>
+        <StepIndicator current={2} total={3} />
         <h1 style={{ ...headingFont, fontSize: 34, fontWeight: 800, color: colors.navy, textAlign: 'center', margin: '4px 0 24px' }}>
           Guideline
         </h1>

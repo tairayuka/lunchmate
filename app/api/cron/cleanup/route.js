@@ -31,12 +31,12 @@ export async function GET(req) {
 
     if (error) {
       console.error('cleanup_old_records RPCエラー:', error);
-      return NextResponse.json({ error: '削除処理に失敗しました', detail: error.message }, { status: 500 });
+      return NextResponse.json({ error: '削除処理に失敗しました' }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
   } catch (e) {
     console.error('予期しないエラー:', e);
-    return NextResponse.json({ error: 'サーバー内部エラー', detail: String(e?.message || e) }, { status: 500 });
+    return NextResponse.json({ error: 'サーバー内部エラー' }, { status: 500 });
   }
 }

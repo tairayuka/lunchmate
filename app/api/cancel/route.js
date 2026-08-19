@@ -24,12 +24,12 @@ export async function POST(req) {
 
     if (error) {
       console.error('cancel_user RPCエラー:', error);
-      return NextResponse.json({ error: 'キャンセルに失敗しました', detail: error.message }, { status: 500 });
+      return NextResponse.json({ error: 'キャンセルに失敗しました' }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
   } catch (e) {
     console.error('予期しないエラー:', e);
-    return NextResponse.json({ error: 'サーバー内部エラー', detail: String(e?.message || e) }, { status: 500 });
+    return NextResponse.json({ error: 'サーバー内部エラー' }, { status: 500 });
   }
 }

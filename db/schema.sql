@@ -74,7 +74,8 @@ insert into nationalities (code, name) values
   ('PH', 'Philippines'),
   ('BR', 'Brazil'),
   ('SA', 'Saudi Arabia'),
-  ('US', 'USA')
+  ('US', 'USA'),
+  ('XX', 'Others')
 on conflict (code) do nothing;
 
 insert into locations (name) values

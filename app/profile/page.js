@@ -5,6 +5,7 @@ import { colors, border, hardShadow, headingFont } from '../../lib/theme';
 import { PROFILE } from '../../lib/content';
 import { ForkKnifeIcon, InfoIcon, ArrowRightIcon } from '../../components/icons';
 import PrimaryButton from '../../components/PrimaryButton';
+import StepIndicator from '../../components/StepIndicator';
 import { toQueryString } from '../../lib/queryParams';
 
 const labelStyle = { display: 'block', fontSize: 13.5, fontWeight: 700, color: colors.navy, marginBottom: 6 };
@@ -14,7 +15,7 @@ const inputStyle = {
   padding: '14px 16px',
   borderRadius: 999,
   border: border(2),
-  fontSize: 15,
+  fontSize: 16,
   background: colors.white,
   outline: 'none',
 };
@@ -30,8 +31,12 @@ export default function ProfilePage() {
     fetch('/api/nationalities')
       .then((res) => res.json())
       .then((data) => {
-        if (data.nationalities) setNationalities(data.nationalities);
-        else setLoadError(data.error || '国籍一覧の取得に失敗しました');
+        if (data.nationalities) {
+          const sorted = [...data.nationalities].sort(
+            (a, b) => (a.code === 'XX') - (b.code === 'XX')
+          );
+          setNationalities(sorted);
+        } else setLoadError(data.error || '国籍一覧の取得に失敗しました');
       })
       .catch(() => setLoadError('国籍一覧の取得に失敗しました'));
   }, []);
@@ -51,6 +56,7 @@ export default function ProfilePage() {
       }}
     >
       <div style={{ maxWidth: 360, margin: '0 auto', padding: '40px 20px 48px', boxSizing: 'border-box' }}>
+        <StepIndicator current={1} total={3} />
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 28, textAlign: 'center' }}>
           <span
             style={{

@@ -119,6 +119,10 @@ function ResultContent() {
           </p>
         </div>
 
+        <p style={{ color: colors.textMuted, fontSize: 12.5, lineHeight: 1.5, maxWidth: 300, margin: '0 auto 20px' }}>
+          {RESULT.howToFind}
+        </p>
+
         <p style={{ ...headingFont, fontSize: 18, fontWeight: 800, color: colors.navy, margin: '0 0 16px' }}>
           {RESULT.partnerPrefix} {partnerName}!
         </p>
@@ -129,17 +133,14 @@ function ResultContent() {
           <ResultRow label={RESULT.locationLabel} value={location} />
         </div>
 
-        <PrimaryButton variant="primary" icon={<CheckCircleIcon size={16} />} onClick={() => router.push('/')}>
-          {RESULT.cta}
-        </PrimaryButton>
-
-        {!partnerCanceled && (
-          <>
-            <div style={{ height: 12 }} />
-            <PrimaryButton variant="danger" disabled={canceling} icon={<XIcon size={16} />} onClick={handleCancelMatch}>
-              {RESULT.cancelCta}
-            </PrimaryButton>
-          </>
+        {partnerCanceled ? (
+          <PrimaryButton variant="primary" icon={<CheckCircleIcon size={16} />} onClick={() => router.push('/')}>
+            {RESULT.cta}
+          </PrimaryButton>
+        ) : (
+          <PrimaryButton variant="danger" disabled={canceling} icon={<XIcon size={16} />} onClick={handleCancelMatch}>
+            {RESULT.cancelCta}
+          </PrimaryButton>
         )}
       </div>
     </main>

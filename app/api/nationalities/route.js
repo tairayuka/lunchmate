@@ -22,12 +22,12 @@ export async function GET() {
 
     if (error) {
       console.error('nationalities取得エラー:', error);
-      return NextResponse.json({ error: '国籍一覧の取得に失敗しました', detail: error.message }, { status: 500 });
+      return NextResponse.json({ error: '国籍一覧の取得に失敗しました' }, { status: 500 });
     }
 
     return NextResponse.json({ nationalities: data });
   } catch (e) {
     console.error('予期しないエラー:', e);
-    return NextResponse.json({ error: 'サーバー内部エラー', detail: String(e?.message || e) }, { status: 500 });
+    return NextResponse.json({ error: 'サーバー内部エラー' }, { status: 500 });
   }
 }
