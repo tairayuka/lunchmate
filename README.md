@@ -34,7 +34,7 @@
 | データベース | Supabase(PostgreSQL)、PL/pgSQL |
 | デプロイ・定期実行 | Vercel(Vercel Cron) |
 | デザイン | Figma |
-| 開発支援 | 【使ったAIツール名。例:Google Antigravity、Claude】 |
+| 開発支援 | Google Antigravity、Claude |
 
 ## 🧩 設計で工夫したこと
 - **要件定義から始めた設計**:要件定義書、ER図、フローチャート、ステータス遷移図を作ってから実装しました(`docs/` フォルダ)。
